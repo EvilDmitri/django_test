@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['example.com']
 
 
 # Application definition
@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'polls',     # own app
-    'jsrpc',     # ajax app
     'dajaxice',  # ajax libs
     'dajax'
 )
@@ -119,5 +118,5 @@ TEMPLATE_DIRS = (
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
 DAJAXICE_FUNCTIONS = (
-        'jsrpc.views.primer',
+        'polls.multiply',
          )
