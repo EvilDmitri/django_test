@@ -1,0 +1,38 @@
+{% extends 'dynamic_models/base.html' %}
+{% load dynamic_tags %}
+
+{% block content %}
+{% csrf_token %}
+  <div class="row">
+    <div class="four columns">
+      {% dynamic_tabs %}
+    </div>
+    <div class="eight columns">
+      <table id="model_list">
+      </table>
+    </div>
+  </div>
+
+  {% verbatim %}
+
+    <script id="modelHead" type="text/html">
+      <thead>
+        <tr>
+          {{#fields}}
+          <th>{{.}}</th>
+          {{/fields}}
+        </tr>
+      </thead>
+    </script>
+
+    <script id="modelBody" type="text/html">
+      <tr>
+      {{#model}}
+        <td>{{.}}</td>
+      {{/model}}
+      </tr>
+    </script>
+
+  {% endverbatim %}
+
+{% endblock %}

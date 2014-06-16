@@ -23,19 +23,19 @@ class Choice(models.Model):
     def __unicode__(self):
         return self.choice_text
 
-
-class Users(models.Model):
-    name = models.CharField(u'Имя', max_length=255)
-    paycheck = models.IntegerField(u'Зарплата', default=0)
-    date_joined = models.DateTimeField(u'Дата поступления на работу')
-
-    def __unicode__(self):
-        return self.name
-
-
-class Rooms(models.Model):
-    department = models.CharField(u'Отдел', max_length=255)
-    spots = models.IntegerField(u'Вместимость', default=1)
-
-    def __unicode__(self):
-        return self.department
+#
+# class Users(models.Model):
+#     name = models.CharField(u'Имя', max_length=255)
+#     paycheck = models.IntegerField(u'Зарплата', default=0)
+#     date_joined = models.DateTimeField(u'Дата поступления на работу')
+#
+#     def __unicode__(self):
+#         return self.name
+#
+#
+# class Rooms(models.Model):
+#     department = models.CharField(u'Отдел', max_length=255)
+#     spots = models.IntegerField(u'Вместимость', default=1)
+#
+#     def __unicode__(self):
+#         return self.department
