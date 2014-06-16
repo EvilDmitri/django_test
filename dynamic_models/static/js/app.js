@@ -29,13 +29,17 @@ $(document).ready(function () {
         $('#model_list').children().remove();
 
         $.post(contentLocation, function(data, status){
-          head = ich.modelHead(data);
+          head = ich.modelHead1(data);
           $('#model_list').append(head);
           $.each(data.qs, function(index, qs) {
             output = {'model': qs, 'field': data.fields};
             model = ich.modelBody(output);
             $('#model_list').append(model);
+
           });
+          new_model = ich.newModel(data);
+            $('form').remove();
+          $('.eight').append(new_model);
         });
 
 		//Make Tab Active

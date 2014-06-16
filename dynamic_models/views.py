@@ -14,11 +14,14 @@ def get_qs(request, model_name):
     fields = [f.verbose_name for f in model._meta.fields]
     result = {'fields': fields, 'qs': list(qs)}
     if request.is_ajax():
-        print result
         return HttpResponse(json.dumps(result),
                             mimetype='application/json')
     else:
         raise Http404
+
+
+def create(request):
+    pass
 
 
 def change(request, model_name, id):

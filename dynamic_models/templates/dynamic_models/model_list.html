@@ -15,12 +15,14 @@
 
   {% verbatim %}
 
-    <script id="modelHead" type="text/html">
+    <script id="modelHead1" type="text/html">
       <thead>
         <tr>
           {{#fields}}
           <th>{{.}}</th>
           {{/fields}}
+
+          <th></th>
         </tr>
       </thead>
     </script>
@@ -30,9 +32,19 @@
       {{#model}}
           <td><input type="text" value={{.}} name={{ field }}></td>
       {{/model}}
+          <td><input type="submit" value="Изменить"></td>
       </tr>
     </script>
 
+
+    <script id="newModel" type="text/html">
+    <form >
+        {{#fields}}
+            <input type="text" name={{.}}>
+        {{/fields}}
+        <input type="submit">
+    </form>
+    </script>
   {% endverbatim %}
 
 {% endblock %}
