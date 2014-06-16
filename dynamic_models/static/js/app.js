@@ -29,10 +29,10 @@ $(document).ready(function () {
         $('#model_list').children().remove();
 
         $.post(contentLocation, function(data, status){
-          head = ich.modelHead(data)
+          head = ich.modelHead(data);
           $('#model_list').append(head);
           $.each(data.qs, function(index, qs) {
-            output = {'model': qs}
+            output = {'model': qs, 'field': data.fields};
             model = ich.modelBody(output);
             $('#model_list').append(model);
           });

@@ -7,7 +7,7 @@ baseDynamic = BaseDynamicModel()
 
 @register.inclusion_tag('dynamic_models/tags/dummy.html', takes_context=True)
 def dynamic_tabs(context, template='dynamic_models/tags/dynamic_tabs.html'):
-    """Return model_name, model.verbose_name dict on dymanic models"""
+    """Return model_name, model.verbose_name dict on dynamic models"""
     models = {}
     for model_name, model in baseDynamic.registry.items():
         models.update({model_name: model._meta.verbose_name})
