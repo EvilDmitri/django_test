@@ -9,10 +9,10 @@ def get_qs(request, model_name):
     model = get_model('dynamic_models', model_name)
     if not model:
         raise Http404
-    fields = [f.name for f in model._meta.fields]
-    qs = model.objects.all().values_list(*fields)
+    field_names = [f.name for f in model._meta.fields]
+    qs = model.objects.all().values_list(*field_names)
     fields = [f.verbose_name for f in model._meta.fields]
-    result = {'fields': fields, 'qs': list(qs)}
+    result = {'fields': fields, 'qs': list(qs), 'names': field_names}
     if request.is_ajax():
         return HttpResponse(json.dumps(result),
                             mimetype='application/json')
@@ -20,8 +20,18 @@ def get_qs(request, model_name):
         raise Http404
 
 
-def create(request):
-    pass
+def create(request, model_name):
+    model = get_model('dynamic_models', model_name)
+    if not model:
+        raise Http404
+    fields = [f.name for f in model._meta.fields]
+    new_fields = dict()
+    for field in fields:
+        new_fields[field] = request.POST.get(field)
+
+    print '1', new_fields
+    return HttpResponse(json.dumps('OK'),
+                            mimetype='application/json')
 
 
 def change(request, model_name, id):

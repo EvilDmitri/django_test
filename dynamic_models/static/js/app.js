@@ -22,6 +22,7 @@ function getCookie(name) {
 
 $(document).ready(function () {
 
+
 	function activateTab($tab) {
 		var $activeTab = $tab.closest('dl').find('a.active'),
 				
@@ -29,17 +30,19 @@ $(document).ready(function () {
         $('#model_list').children().remove();
 
         $.post(contentLocation, function(data, status){
-          head = ich.modelHead1(data);
+          var head = ich.modelHead(data);
           $('#model_list').append(head);
           $.each(data.qs, function(index, qs) {
-            output = {'model': qs, 'field': data.fields};
-            model = ich.modelBody(output);
-            $('#model_list').append(model);
+              var output = {'model': qs, 'fields': data.names};
+              var model = ich.modelBody(output);
+              $('#model_list').append(model);
 
           });
+
+          $('form').remove();
           new_model = ich.newModel(data);
-            $('form').remove();
           $('.eight').append(new_model);
+            $('#new_form').append("<input id=path type=hidden value=" + contentLocation + ">");
         });
 
 		//Make Tab Active
@@ -61,3 +64,46 @@ $(document).ready(function () {
 	}
 
 });
+
+
+//   $("#new_form").submit(function( event ) {
+function post_form() {
+
+    var path = $('#path').val();
+    var msg   = $('#new_form').serialize();
+        $.ajax({
+          type: 'POST',
+          url: path + 'create',
+          data: msg,
+          success: function(data) {
+            $('.results').html(data);
+          },
+          error:  function(xhr, str){
+                alert('Возникла ошибка: ' + xhr.responseCode);
+            }
+        });
+
+}
+
+function submit_form(input_el){
+    var path = $('#path').val();
+
+
+    var table = input_el.parentNode.parentNode;
+    var row = table.childNodes[0];
+    var columns = row.childNodes[0];
+    alert(columns.className);
+
+
+//        $.ajax({
+//          type: 'POST',
+//          url: path + 'create',
+//          data: msg,
+//          success: function(data) {
+//            $('.results').html(data);
+//          },
+//          error:  function(xhr, str){
+//                alert('Возникла ошибка: ' + xhr.responseCode);
+//            }
+//        });
+}
