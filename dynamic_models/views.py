@@ -9,9 +9,9 @@ def get_qs(request, model_name):
     model = get_model('dynamic_models', model_name)
     if not model:
         raise Http404
-    field_names = [f.name for f in model._meta.fields]
+    field_names = [f.name for f in model._meta.fields if f.name is not 'id']
     qs = model.objects.all().values_list(*field_names)
-    fields = [f.verbose_name for f in model._meta.fields]
+    fields = [f.verbose_name for f in model._meta.fields if f.verbose_name is not 'id']
     result = {'fields': fields, 'qs': list(qs), 'names': field_names}
     if request.is_ajax():
         return HttpResponse(json.dumps(result),
@@ -24,18 +24,24 @@ def create(request, model_name):
     model = get_model('dynamic_models', model_name)
     if not model:
         raise Http404
-    fields = [f.name for f in model._meta.fields]
+    fields = [f.name for f in model._meta.fields if f.name is not 'id']
     new_fields = dict()
     for field in fields:
         new_fields[field] = request.POST.get(field)
 
-    print '1', new_fields
+
+    new_obj = model.objects.create(**new_fields)
+    new_obj.save()
     return HttpResponse(json.dumps('OK'),
-                            mimetype='application/json')
+                        mimetype='application/json')
+    # except ValueError:
+    #     return HttpResponse(json.dumps('Wrong value'),
+    #                         mimetype='application/json')
+
+
 
 
 def change(request, model_name, id):
-
     model = get_model('dynamic_models', model_name)
     if not model:
         raise Http404
@@ -56,4 +62,4 @@ def model_list(request):
     return render_to_response('dynamic_models/model_list.html',
                               {'data': 'data'},
                               context_instance=RequestContext(request)
-                              )
+    )

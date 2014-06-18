@@ -39,10 +39,13 @@ $(document).ready(function () {
 
           });
 
-          $('form').remove();
+          $('#new_form').remove();
+           $('h3').remove();
           new_model = ich.newModel(data);
           $('.eight').append(new_model);
             $('#new_form').append("<input id=path type=hidden value=" + contentLocation + ">");
+        }).fail(function(){
+            alert('Somthing wrong');
         });
 
 		//Make Tab Active
@@ -81,6 +84,8 @@ function post_form() {
           error:  function(xhr, str){
                 alert('Возникла ошибка: ' + xhr.responseCode);
             }
+        }).done(function(){
+            $('.active').click();
         });
 
 }
